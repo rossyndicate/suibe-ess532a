@@ -1,0 +1,176 @@
+---
+title: "Using AI"
+author: "Katie Willi"
+date: "2024-09-24"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+In this assignment, you will be exploring the capabilities of chat bot assistants in the context of several data analysis tasks. By working through this lesson, you will gain insights into the strengths and limitations of using a chat bot for data analysis, as well as strengthen your own skills in R and statistical reasoning.
+
+#### The NOAA Atlantic Hurricane Dataset
+
+We will be using the `atlantic_storms.csv` file in the data folder for this lesson. This dataset is the NOAA Atlantic hurricane database (adapted from <https://www.nhc.noaa.gov/data/#hurdat>).  The data includes storm tracks of storms from 1975-2021, as well as some characteristics (like wind and air pressure) during their progression. Storms from 1979 onward are measured every six hours during the lifetime of the storm. Storms in earlier years have some missing data. Descriptions of each variable in the dataset can be found in `data/atlantic_storms_desc.txt`.
+
+## Understanding the data
+
+```{r}
+library(tidyverse)
+
+storms <- read_csv("data/atlantic_storms.csv") 
+```
+
+Ahead of asking a chat bot to help with a data analysis or coding task, it is extremely important to have an understanding of the data it will be based on. We suggest reviewing the variable descriptions in the `atlantic_storms_desc.txt` file and looking at the data frame itself before moving through the lesson plan:
+
+```{r, eval = FALSE}
+glimpse(storms)
+
+View(storms)
+```
+
+## The assignment
+
+1)  What chat bot are you using for this assignment? 0.5 points.
+
+    ***CHAT BOT NAME:***
+
+2)  *Let's see how well you chat bot does as far as helping with workflow development.* Ask the chat bot to write code (in R) that tests the hypothesis that tropical depressions have lower air pressures than subtropical depressions. (Hint: The chat bot will need some context about the hurricanes data set to adequately answer this question. At a minimum, copy and paste the variable description file into the chat bot with your question. Or, you might also be able to upload the data frame itself!) 1 point.
+
+    ***QUESTION POSED TO CHAT BOT:***
+
+    ***CHAT BOT RESPONSE:***
+
+3)  Did the resulting code perform a statistical test? If it did not, re-ask the question specifying you want it to perform a statistical analysis. **Also specify that you want it to use the {rstatix} package and {tidyverse} syntax.** 0.5 points.
+
+    ***QUESTION POSED TO CHAT BOT:***
+
+    ***CHAT BOT RESPONSE:***
+
+4)  In the workflow above, did the chat bot provide code for determining whether the tropical depression and subtropical depression observations meet all the assumptions of the test?\* 0.5 points.
+
+*\*Time series data almost always has autocorrelation, meaning that observations are correlated with their past values. This violates the independence assumptions of many tests. If the chat bot performed the t-test or a Wilcoxon Rank-Sum on an unmodified version of the data, it violated the rules of those tests.*
+
+4)  If the chatbot did not, ask it to re-write the workflow to test whether the dataset meets the assumptions of the selected statistical test. 0.5 points.
+
+    ***QUESTION POSED TO CHAT BOT:***
+
+    ***CHAT BOT RESPONSE:***
+
+6)  Ask the chat bot to write code for a figure that supplements the statistical test performed above. 1 point.
+
+    ***QUESTION POSED TO CHAT BOT:***
+
+    ***CHAT BOT RESPONSE:***
+
+7)  Did the resulting code generate an appropriate figure? Was the figure generated with `ggplot()?` 0.5 points.
+
+8)  Ask the chat bot to help you create your own, different hypothesis on the storms data set and develop an R workflow to test it. 1 point.
+
+    ***QUESTION POSED TO CHAT BOT:***
+
+    ***CHAT BOT RESPONSE:***
+
+9)  Does the code run, and does the workflow make sense to you? 0.5 points.
+
+10) *Next let's test the chat bot's ability to simplify and improve existing code.* Ask the chat bot to simplify the messy code below, and to remove unnecessary steps. 1 point.
+
+```{r}
+hurricanes_data <- storms %>% rowid_to_column() %>%
+  filter(status == "hurricane") %>%
+  mutate(storm_year = ifelse(month %in% c(1,2,3,4), as.numeric(year) - 1, as.numeric(year))) %>%
+  group_by(name, storm_year) %>%
+  mutate(n_days = n()) %>%
+  ungroup() %>% 
+  group_by(storm_year) %>%
+  mutate(total_days = sum(n_days, na.rm = TRUE)) %>%
+  arrange(storm_year) %>% 
+  mutate(hurricane_presence = ifelse(is.na(total_days), 0, 1)) %>%
+  # pivot_wider(names_from = "storm_year", values_from = "total_days") %>%
+  # filter(is.numeric(`1975`)) %>%
+  # pivot_longer(-hurricane_presence, names_to = "storm_year", values_to = "total_days") %>%
+  select(c(-hurricane_presence)) %>%
+  ungroup() %>%
+  full_join(., storms) %>%
+  select(rowid, name, year, month, day, hour, lat, long, status, category, wind, pressure, tropicalstorm_force_diameter, hurricane_force_diameter) %>%
+  distinct(, .keep_all = FALSE) %>%
+  filter(status == "hurricane") %>%
+  select(-rowid)
+
+hurricanes_data <- hurricanes_data %>%
+  mutate(
+    season = case_when(
+    month %in% c(6, 7, 8) ~ "Summer",
+    month %in% c(9, 10, 11) ~ "Fall",
+    month %in% c(12, 1, 2) ~ "Winter",
+    month %in% c(3, 4, 5) ~ "Spring",
+    TRUE ~ NA_character_
+  )) %>%
+  drop_na(season)
+
+season_counts <- hurricanes_data %>%
+  count(season)
+
+plotter <- function(dataset){
+  datum <- season_counts
+  ggplot(datum, aes(x = season, y = n, fill = season)) +
+    geom_bar(stat = "identity", alpha = 0.7) +
+    theme_minimal()
+}
+
+plotter(dataset = season_counts)
+```
+
+         
+    ***QUESTION POSED TO CHAT BOT:***
+
+    ***CHAT BOT RESPONSE:***
+
+
+11) Did the returned code include a description of what the code is doing? If not, also ask the chat bot to include a description of each coding step. 0.5 points. 
+
+    ***QUESTION POSED TO CHAT BOT:***
+
+    ***CHAT BOT RESPONSE:***
+
+12) The code below is an attempt at multiple linear regression for predicting the maximum wind speed of storms, but it doesn't work. Ask the chat bot to fix it. 1 point. 
+
+```{r}
+# Can we predict the max wind speed of a storm based on where and when it
+# formed?
+
+# test for correlations
+select(storms %>% c(lat, long, month)) %>%
+  cor()
+
+model_data <- storms %>%
+  group_by(name, year) %>%
+  summarise(
+    peak_wind = max(wind),           
+    start_month = first(month),                   
+    start_long = first(long)
+    start_lat = first(lat)
+  ) 
+
+
+model <- lm(max_wind ~ start_month + start_lat + start_long, data = model_data)
+
+summary(modle)
+
+plot(model, which = 1)
+plot(model, which = 2)
+```
+
+    ***QUESTION POSED TO CHAT BOT:***
+
+    ***CHAT BOT RESPONSE:***
+
+
+13) Test out the chat bot's response. Does the code now run? 0.5 points. 
+
+14) Reflect on your experience with this assignment. What are two strengths and two limitations you observed with the chat bot? 1 point.
+
+
+

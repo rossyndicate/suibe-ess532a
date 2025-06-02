@@ -1,0 +1,26 @@
+Column: Description
+name: Storm Name
+year: Date of report - Year
+month: Date of report - Month
+day: Date of report - Day
+hour: Hour of report (in UTC)
+lat: Location of storm center - Latitude
+long: Location of storm center - Longitude
+status: Storm classification - tropical depression, tropical storm,
+      extratropical, hurricane, subtropical storm, subtropical depression,
+      disturbance, other low, tropical wave
+category: Saffir-Simpson hurricane category calculated from wind speed
+    	- NA: Not a hurricane
+    	- 1: 64+ knots
+    	- 2: 83+ knots
+    	- 3: 96+ knots
+	    - 4: 113+ knots
+    	- 5: 137+ knots
+wind: Storm's maximum sustained wind speed (in knots)
+pressure: Air pressure at the storm's center (in millibars)
+tropicalstorm_force_diameter: Diameter (in nautical miles) of the area
+      experiencing tropical storm strength winds (34 knots or above). Only
+      available starting in 2004.
+hurricane_force_diameter: Diameter (in nautical miles) of the area
+      experiencing hurricane strength winds (64 knots or above).
+      Only available starting in 2004.
