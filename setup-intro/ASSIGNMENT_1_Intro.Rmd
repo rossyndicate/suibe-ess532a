@@ -14,7 +14,7 @@ data("penguins")
 #### Exercises
 
 
-1.  Why don't the following lines of code work? Fix each one so the code runs
+1.  Why don't the following lines of code work? Fix each one so the code runs.
 
 ```{r eval=FALSE}
 myList["Fruit"]
@@ -30,7 +30,7 @@ penguins[island=='Dream',]
 
 
 
-2.  How many species are in the `penguins` data set? What islands were the data collected for? (Note: the `unique()` function might help)
+2.  How many species are in the `penguins` data set? What islands were the data collected for? Note: the `unique()` function might help.
 
 
 
@@ -41,26 +41,26 @@ penguins[island=='Dream',]
 
 
 
-4.  Use indexing and the `mean()` function to find the average flipper length for the *Adelie* species on Dream island. (Note: explore the `mean()` function and how to deal with NA values).
+4.  Use indexing and the `mean()` function to find the average flipper length for the *Adelie* species on Dream island. Note: explore the `mean()` function and how to deal with NA values.
 
 
 
 
 
-5.  Reorder the variables in `penguins` so that `year` is the first column followed by the rest (Hint: look into the use of `everything()`).
+5.  Reorder the variables in `penguins` so that `year` is the first column followed by the rest. Hint: look into the use of `everything()`.
 
 
 
 
 
-6.  Create a new column called 'size_group' where individuals with body mass greater than 4000 are called 'large' and those smaller are called 'small'.
+6.  Create a new column called 'size_group' where individuals with a body mass greater than 4000 are called 'large' and those smaller are called 'small'.
 
 
 
 
 
 
-7.  Which species had the largest average body mass. Remember to account for NA values.
+7.  Which species had the largest average body mass? Remember to account for NA values.
 
 
 
