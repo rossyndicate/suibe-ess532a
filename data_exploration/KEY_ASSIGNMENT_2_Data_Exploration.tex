@@ -1,0 +1,320 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Data Exploration Assignment: Bison Dataset},
+  pdfauthor={Katie Willi},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Data Exploration Assignment: Bison Dataset}
+\author{Katie Willi}
+\date{2025-06-03}
+
+\begin{document}
+\maketitle
+
+\subsection{Introduction}\label{introduction}
+
+In this assignment, we will be using a new dataset containing
+information collected about bison on the Konza Prairie in Kansas, USA.
+
+\textbf{Data Credit:} EBlair, J. 2021. CBH01 Konza Prairie bison herd
+information ver 12. Environmental Data Initiative.
+\url{https://doi.org/10.6073/pasta/9c641b35695abc5889edd64c3950517f}
+(Accessed 2021-05-10).
+\url{doi:10.6073/pasta/9c641b35695abc5889edd64c3950517f}
+
+\textbf{Dataset Variables:} - \texttt{data\_code}: a character denoting
+the dataset code - \texttt{rec\_year}: a number denoting the year of
+observation - \texttt{rec\_month}: a number denoting the month of
+observation - \texttt{rec\_day}: a number denoting the day of
+observation - \texttt{animal\_code}: a character denoting the unique
+individual bison identification code based on ear tag number -
+\texttt{animal\_sex}: a character denoting the sex of bison: M = male, F
+= female, U = unknown - \texttt{animal\_weight}: a number denoting bison
+weight in pounds - \texttt{animal\_yob}: a number denoting the year
+animal was born
+
+\subsection{Setup}\label{setup}
+
+First, load the necessary packages and read in the bison dataset:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+
+\CommentTok{\# Read in the bison dataset}
+\NormalTok{bison }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"data\_exploration/data/bison\_data.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Exercise 1: Basic Data
+Exploration}\label{exercise-1-basic-data-exploration}
+
+Use the following functions to explore the bison dataset:
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\tightlist
+\item
+  Use \texttt{nrow()} and \texttt{ncol()} to find how many rows and
+  columns the dataset has
+\item
+  Use \texttt{names()} to see the column names
+\item
+  Use \texttt{summary()} to get a basic summary of all variables
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{nrow}\NormalTok{(bison)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 8325
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ncol}\NormalTok{(bison)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 8
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{names}\NormalTok{(bison)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "data_code"     "rec_year"      "rec_month"     "rec_day"      
+## [5] "animal_code"   "animal_sex"    "animal_weight" "animal_yob"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(bison)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   data_code            rec_year      rec_month        rec_day     
+##  Length:8325        Min.   :1994   Min.   :10.00   Min.   : 5.00  
+##  Class :character   1st Qu.:2003   1st Qu.:10.00   1st Qu.:12.00  
+##  Mode  :character   Median :2008   Median :10.00   Median :24.00  
+##                     Mean   :2008   Mean   :10.48   Mean   :19.14  
+##                     3rd Qu.:2015   3rd Qu.:11.00   3rd Qu.:27.00  
+##                     Max.   :2020   Max.   :11.00   Max.   :31.00  
+##                                                                   
+##  animal_code         animal_sex        animal_weight      animal_yob  
+##  Length:8325        Length:8325        Min.   :  90.0   Min.   :1981  
+##  Class :character   Class :character   1st Qu.: 454.0   1st Qu.:1999  
+##  Mode  :character   Mode  :character   Median : 777.0   Median :2005  
+##                                        Mean   : 749.5   Mean   :2005  
+##                                        3rd Qu.: 986.0   3rd Qu.:2011  
+##                                        Max.   :2050.0   Max.   :2020  
+##                                        NA's   :1        NA's   :251
+\end{verbatim}
+
+\subsection{Exercise 2: Simple
+Filtering}\label{exercise-2-simple-filtering}
+
+Filter the bison dataset to include only female bison (``F''). Store
+this in a new object called \texttt{female\_bison}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{female\_bison }\OtherTok{\textless{}{-}}\NormalTok{ bison }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(animal\_sex }\SpecialCharTok{==} \StringTok{"F"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Exercise 3: Creating a New
+Variable}\label{exercise-3-creating-a-new-variable}
+
+Use \texttt{mutate()} to create a new column in \texttt{bison} called
+\texttt{age\_at\_recording} that calculates how old each bison was when
+recorded.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bison }\OtherTok{\textless{}{-}}\NormalTok{ bison }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{age\_at\_recording =}\NormalTok{ rec\_year }\SpecialCharTok{{-}}\NormalTok{ animal\_yob)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Exercise 4: Using if\_else() for
+Categories}\label{exercise-4-using-if_else-for-categories}
+
+Create a new column in bison called \texttt{weight\_category} using
+\texttt{if\_else()}. Classify bison as: - ``Heavy'' if their weight is
+greater than 800 pounds - ``Light'' if their weight is 800 pounds or
+less
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bison }\OtherTok{\textless{}{-}}\NormalTok{ bison }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{weight\_category =} \FunctionTok{if\_else}\NormalTok{(animal\_weight }\SpecialCharTok{\textgreater{}} \DecValTok{800}\NormalTok{, }\StringTok{"Heavy"}\NormalTok{, }\StringTok{"Light"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Exercise 5: Basic Grouping and
+Summarizing}\label{exercise-5-basic-grouping-and-summarizing}
+
+Find the average weight for each sex (M, F, U).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{avg\_weight }\OtherTok{\textless{}{-}}\NormalTok{ bison }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(animal\_sex) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{avg\_weight =} \FunctionTok{mean}\NormalTok{(animal\_weight, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Exercise 6: Selecting and
+Arranging}\label{exercise-6-selecting-and-arranging}
+
+Select only the columns: animal\_code, animal\_sex, animal\_weight, and
+rec\_year. Then arrange the data by weight from heaviest to lightest
+using \texttt{arrange()}.
+
+Hint: Look at the examples in \texttt{?arrange}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{subset\_bison }\OtherTok{\textless{}{-}}\NormalTok{ bison }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(animal\_code, animal\_sex, animal\_weight, rec\_year) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(animal\_weight))}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Exercise 7: Basic Scatter
+Plot}\label{exercise-7-basic-scatter-plot}
+
+Create a scatter plot using \texttt{geom\_point()} to show the
+relationship between recording year (x-axis) and bison weight (y-axis):
+- Color the points by sex - Add appropriate axis labels
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(bison) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ rec\_year, }\AttributeTok{y =}\NormalTok{ animal\_weight, }\AttributeTok{color =}\NormalTok{ animal\_sex)) }\SpecialCharTok{+}
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Animal Weight"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Record Year"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{KEY_ASSIGNMENT_2_Data_Exploration_files/figure-latex/unnamed-chunk-8-1.pdf}}
+
+\subsection{Bonus Question}\label{bonus-question}
+
+Look at your scatter plot from Exercise 8. Do you notice any patterns?
+Write 1-2 sentences about what you observe.
+
+\textbf{Your observation:} {[}Write what you notice here{]}
+
+\end{document}
