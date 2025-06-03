@@ -114,7 +114,7 @@ Create a scatter plot using `geom_point()` to show the relationship between reco
 
 ## Bonus Question
 
-Look at your scatter plot from Exercise 8. Do you notice any patterns? Write 1-2 sentences about what you observe.
+Look at your scatter plot from Exercise 7. Do you notice any patterns? Write 1-2 sentences about what you observe.
 
 **Your observation:**
 [Write what you notice here]
