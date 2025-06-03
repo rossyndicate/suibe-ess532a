@@ -1,0 +1,120 @@
+---
+title: "Data Exploration Assignment: Bison Dataset"
+author: "Katie Willi"
+date: "2025-06-03"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+## Introduction
+
+In this assignment, we will be using a new dataset containing information collected about bison on the Konza Prairie in Kansas, USA.
+
+**Data Credit:**
+EBlair, J. 2021. CBH01 Konza Prairie bison herd information ver 12. Environmental Data Initiative. https://doi.org/10.6073/pasta/9c641b35695abc5889edd64c3950517f (Accessed 2021-05-10). doi:10.6073/pasta/9c641b35695abc5889edd64c3950517f
+
+**Dataset Variables:**
+- `data_code`: a character denoting the dataset code
+- `rec_year`: a number denoting the year of observation
+- `rec_month`: a number denoting the month of observation
+- `rec_day`: a number denoting the day of observation
+- `animal_code`: a character denoting the unique individual bison identification code based on ear tag number
+- `animal_sex`: a character denoting the sex of bison: M = male, F = female, U = unknown
+- `animal_weight`: a number denoting bison weight in pounds
+- `animal_yob`: a number denoting the year animal was born
+
+## Setup
+
+First, load the necessary packages and read in the bison dataset:
+
+```{r}
+library(tidyverse)
+
+# Read in the bison dataset
+bison <- read_csv("data/bison_data.csv")
+```
+
+## Exercise 1: Basic Data Exploration
+
+Use the following functions to explore the bison dataset:
+
+a) Use `nrow()` and `ncol()` to find how many rows and columns the dataset has
+b) Use `names()` to see the column names
+c) Use `summary()` to get a basic summary of all variables
+
+```{r}
+# Your code here
+
+```
+
+## Exercise 2: Simple Filtering
+
+Filter the bison dataset to include only female bison ("F"). 
+Store this in a new object called `female_bison`.
+
+```{r}
+# Your code here
+
+```
+
+## Exercise 3: Creating a New Variable
+
+Use `mutate()` to create a new column called `age_at_recording` that calculates how old each bison was when recorded.
+
+```{r}
+# Your code here
+
+```
+
+## Exercise 4: Using if_else() for Categories
+
+Create a new column called `weight_category` using `if_else()`. Classify bison as:
+- "Heavy" if their weight is greater than 800 pounds
+- "Light" if their weight is 800 pounds or less
+
+```{r}
+# Your code here
+
+```
+
+## Exercise 5: Basic Grouping and Summarizing
+
+Find the average weight for each sex (M, F, U). 
+
+```{r}
+# Your code here
+
+```
+
+## Exercise 6: Selecting and Arranging
+
+Select only the columns: animal_code, animal_sex, animal_weight, and rec_year.
+Then arrange the data by weight from heaviest to lightest using `arrange()`.
+
+Hint: Look at the examples in `?arrange`.
+
+```{r}
+# Your code here
+
+```
+
+## Exercise 7: Basic Scatter Plot
+
+Create a scatter plot using `geom_point()` to show the relationship between recording year (x-axis) and bison weight (y-axis):
+- Color the points by sex 
+- Add appropriate axis labels
+
+```{r}
+# Your code here
+
+```
+
+## Bonus Question
+
+Look at your scatter plot from Exercise 7. Do you notice any patterns? Write 1-2 sentences about what you observe.
+
+**Your observation:**
+[Write what you notice here]
