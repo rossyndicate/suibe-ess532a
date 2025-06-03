@@ -1,5 +1,5 @@
 ---
-wtitle: "Data Exploration Lesson: Palmer Penguins Wrap-Up"
+title: "Data Exploration Lesson: Palmer Penguins Wrap-Up"
 author: "Katie Willi"
 date: "2025-06-03"
 output: pdf_document
@@ -26,7 +26,7 @@ Next, we can load in the built-in penguins data set from {palmerpenguins}:
 data(penguins)
 ```
 
-We can use the {tidyverse} to answer questions like, "Which penguins species has the longest flipper length?"
+We can use the {tidyverse} to answer questions like, "Which penguin species has the longest flipper length?"
 
 ```{r}
 longest_flippers <- penguins %>%
@@ -80,6 +80,8 @@ ggplot(data = <DATA>) +
   <GEOM_FUNCTION>(mapping = aes(<MAPPINGS>))
 ```
 
+\pagebreak
+
 **Visualize variable distributions with `geom_historgram()`**
 
 If you plan on doing any statistical analysis on your data , one of the first things you are likely to do is explore the distribution of your variables. You can plot histograms with `geom_histogram()`
@@ -107,6 +109,7 @@ ggplot(penguins) +
   facet_wrap(~species)
 ```
 
+\pagebreak
 **Compare sample sizes with `geom_bar()`**
 
 Let's use ggplot to see sample size for each species on each island.
@@ -129,6 +132,7 @@ ggplot(penguins, aes(x = island, fill = species)) +
 ```
 
 This is important information, since we know now that not all species were sampled on every island, which will have complications for any comparisons we may want to make among islands.
+\pagebreak
 
 **Visualize variable relationships with `geom_point()`**
 
@@ -137,4 +141,12 @@ We can use `geom_point()` to view the relationship between two continuous variab
 ```{r, eval=TRUE, warning=FALSE}
 ggplot(penguins) +
   geom_point(mapping = aes(x = body_mass_g, y = flipper_length_mm, color = species))
+```
+
+Lastly, we can edit the axis labels with `labs()`
+
+```{r}
+ggplot(penguins) +
+  geom_point(mapping = aes(x = body_mass_g, y = flipper_length_mm, color = species)) +
+  labs(x = "Body Mass (g)", y = "Flipper Length (mm)")
 ```
