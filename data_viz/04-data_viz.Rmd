@@ -456,6 +456,6 @@ To submit the assignment, create an R Markdown document that includes the data, 
 
 ![](www/KatieFrazer.png)
 
-![](www/spencer zigler.png)
+![](www/spencer%20zigler.png)
 
 ![](www/Shelby_Mead.png)
