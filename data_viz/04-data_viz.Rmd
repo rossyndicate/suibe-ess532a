@@ -438,7 +438,7 @@ airquality %>%
 
 ## The Assignment: The Ugly Plot Challenge
 
-The assignment is to use everything you've learned today and additional resources (i) to make a "Ugly Plot". By "Ugly Plot" we mean using the data visualization tools and resources you've learned to make a creatively "ugly" plot. For example, use bright colors, change the axes to make no sense, add text or images where they shouldn't be. This assignment will challenge you to add customization to your basic `ggplot`s. Be as creative as you want!
+The assignment is to use everything you've learned today and additional resources to make a "Ugly Plot". By "Ugly Plot" we mean using the data visualization tools and resources you've learned to make a creatively "ugly" plot. For example, use bright colors, change the axes to make no sense, add text or images where they shouldn't be. This assignment will challenge you to add customization to your basic `ggplot`s. Be as creative as you want!
 
 You can create these plots with any data (e.g., the dataset from today, the penguins data, or new ones). The visualization just has to be something we have not made in class before.
 
