@@ -99,16 +99,14 @@ visually after it is knitted and created.
 
 # Section 6: Code
 
-You can embed an R code chunk like this:
+You can embed an R code chunk (i.e., section) like this:
 
-``` r
+```{r, echo = FALSE}
 # code block comments with #
 x <- 1:10
 y <- x^2
 plot(x, y)
 ```
-
-## ![](pics/code_ex-1.png)
 
 ## Customizing Code Chunk Output
 
@@ -147,11 +145,11 @@ Here are some common code chunk options in R Markdown:
 
 You can use backticks \`
 \```` to format inline code (i.e., sandwiched in text). For example, \``1 + 1 ```\`
-will display as `1 + 1`.
+will display as: `1 + 1`.
 
 If you want to show the **output** of an R expression inline, use
 backticks with `r` inside. For example, \``r 1 + 1`\` will display as:
-`r 1 + 1`.
+`r 1+1`.
 
 This is useful when you want to embed results dynamically within your
 text.
@@ -233,46 +231,108 @@ Here is some text with a footnote.[^2]
 
 # Debugging
 
-Chances are, you have already had to debug code - nobody's perfect! Therefore, knowing how to spot mistakes is one of the most critical aspects of coding.
+Chances are, you have already had to debug code - nobody's perfect!
+Therefore, knowing how to spot mistakes is one of the most critical
+aspects of coding.
 
 ### **Debugging techniques**
 
-Below is a collection of common techniques and best practices for debugging R code:
+Below is a collection of common techniques and best practices for
+debugging R code:
 
--   Debugging Guide From Hadley Wickham - <https://adv-r.hadley.nz/debugging.html>
+-   Debugging Guide From Hadley Wickham -
+    <https://adv-r.hadley.nz/debugging.html>
 
--   Debugging Guide from Data Flair - <https://data-flair.training/blogs/debugging-in-r-programming/>
+-   Debugging Guide from Data Flair -
+    <https://data-flair.training/blogs/debugging-in-r-programming/>
 
--   Debugging Zine (paid, but very cool). - <https://wizardzines.com/zines/debugging-guide/>
+-   Debugging Zine (paid, but very cool). -
+    <https://wizardzines.com/zines/debugging-guide/>
 
--   The first few paragraphs of this useful rant about working directories - <https://www.tidyverse.org/blog/2017/12/workflow-vs-script/>
+-   The first few paragraphs of this useful rant about working
+    directories -
+    <https://www.tidyverse.org/blog/2017/12/workflow-vs-script/>
 
 ### **Error codes and solutions**
 
-Here is a list of some common R error messages and their explanations, along with solutions to fix them:
+Here is a list of some common R error messages and their explanations,
+along with solutions to fix them:
 
--   `Error: object 'x' not found` - This means that R cannot find the object 'x' in the current environment. The solution is to check the spelling (and case!) of the object, and make sure it has been defined and that the variable exists in your environment.
+-   `Error: object 'x' not found` - This means that R cannot find the
+    object 'x' in the current environment. The solution is to check the
+    spelling (and case!) of the object, and make sure it has been
+    defined and that the variable exists in your environment.
 
--   `Error in if (x) { : missing value where TRUE/FALSE needed` - This means that the if (or any conditional) statement is trying to evaluate a missing value. The solution is to check the values passed to the if (or any conditional) statement and ensure that they are not missing.
+-   `Error in if (x) { : missing value where TRUE/FALSE needed` - This
+    means that the if (or any conditional) statement is trying to
+    evaluate a missing value. The solution is to check the values passed
+    to the if (or any conditional) statement and ensure that they are
+    not missing.
 
--   `Error in x[y] : object of type 'closure' is not subsettable` - This means that the object being indexed is a function, not a vector or data frame. The solution is to check the object being indexed and make sure it is a vector or data frame, or use the appropriate function to extract the desired information.
+-   `Error in x[y] : object of type 'closure' is not subsettable` - This
+    means that the object being indexed is a function, not a vector or
+    data frame. The solution is to check the object being indexed and
+    make sure it is a vector or data frame, or use the appropriate
+    function to extract the desired information.
 
--   `Error in library(x) : there is no package called 'x'` - This means that the R interpreter cannot find the specified package. The solution is to check the spelling and case of the package name and make sure it is installed on your system.
+-   `Error in library(x) : there is no package called 'x'` - This means
+    that the R interpreter cannot find the specified package. The
+    solution is to check the spelling and case of the package name and
+    make sure it is installed on your system.
 
--   `Error in file(file, ifelse(append, "a", "w")) : cannot open the connection` - This means that R cannot open the specified file. The solution is to check the file path and permissions, and make sure that the file is accessible by R.
+-   `Error in file(file, ifelse(append, "a", "w")) : cannot open the connection` -
+    This means that R cannot open the specified file. The solution is to
+    check the file path and permissions, and make sure that the file is
+    accessible by R.
 
--   `Error: unexpected symbol in:"x <- c(1, 2, 3) +` - This means that there is an unexpected symbol, such as a typo, in the R code. The solution is to check the code for typos and correct them, most commonly this is a missing comma or parentheses; or, you are providing the wrong arguments to a function call.
+-   `Error: unexpected symbol in:"x <- c(1, 2, 3) +` - This means that
+    there is an unexpected symbol, such as a typo, in the R code. The
+    solution is to check the code for typos and correct them, most
+    commonly this is a missing comma or parentheses; or, you are
+    providing the wrong arguments to a function call.
 
--   `Warning: In x + y : longer object length is not a multiple of shorter object length` - This means that the vectors being added have different lengths, and R is recycling the shorter vector to match the length of the longer vector. This can cause unexpected results and it is recommended to check the lengths of the vectors and make sure they match before performing any operations.
+-   `Warning: In x + y : longer object length is not a multiple of shorter object length` -
+    This means that the vectors being added have different lengths, and
+    R is recycling the shorter vector to match the length of the longer
+    vector. This can cause unexpected results and it is recommended to
+    check the lengths of the vectors and make sure they match before
+    performing any operations.
 
--   `Error in parse(text = x) : <text>:1:0: unexpected end of input` - This means that there is a problem with the R code being parsed, often due to a missing parenthesis or bracket. The solution is to check the code for any missing or extra characters and correct them.
+-   `Error in parse(text = x) : <text>:1:0: unexpected end of input` -
+    This means that there is a problem with the R code being parsed,
+    often due to a missing parenthesis or bracket. The solution is to
+    check the code for any missing or extra characters and correct them.
 
--   `Warning: NAs introduced by coercion` - This means that R is introducing missing values (NA) due to a type coercion. This can happen when trying to combine different types of data, such as characters and numerics. The solution is to check the data types of the variables and make sure they are compatible before performing any operations.
+-   `Warning: NAs introduced by coercion` - This means that R is
+    introducing missing values (NA) due to a type coercion. This can
+    happen when trying to combine different types of data, such as
+    characters and numerics. The solution is to check the data types of
+    the variables and make sure they are compatible before performing
+    any operations.
 
--   `Error in x[y == z] : invalid subscript type 'list'` - This means that the script used to index the object 'x' is not a valid type, such as a list. The solution is to check the type of the object being used to index 'x' and make sure it is a valid type such as a logical vector, numeric vector or character vector.
+-   `Error in x[y == z] : invalid subscript type 'list'` - This means
+    that the script used to index the object 'x' is not a valid type,
+    such as a list. The solution is to check the type of the object
+    being used to index 'x' and make sure it is a valid type such as a
+    logical vector, numeric vector or character vector.
 
--   `Error in x[y] <- z : replacement has length zero` - This means that the object being used to replace the values in 'x' has a length of zero. The solution is to check the object being used for replacement and make sure it has the same length as 'x' or the corresponding index.
+-   `Error in x[y] <- z : replacement has length zero` - This means that
+    the object being used to replace the values in 'x' has a length of
+    zero. The solution is to check the object being used for replacement
+    and make sure it has the same length as 'x' or the corresponding
+    index.
 
--   `Warning: Non-ASCII characters are being interpreted as ASCII` - This means that R is interpreting non-ASCII characters as ASCII characters. This can cause unexpected results and it is recommended to check the encoding of your data and make sure it is in the correct format before performing any operations.
+-   `Warning: Non-ASCII characters are being interpreted as ASCII` -
+    This means that R is interpreting non-ASCII characters as ASCII
+    characters. This can cause unexpected results and it is recommended
+    to check the encoding of your data and make sure it is in the
+    correct format before performing any operations.
 
-These are just a few of the most common errors in R, but there are many other types of error messages that can occur. Keep in mind that the best way to troubleshoot R errors is to read the error message carefully and look for clues about where the error is occurring in your code. And, use the internet as a resource! It is very unlikely you are the first person to encounter any given error. (Next week, we will teach you how to effectively use artificial intelligence (AI) to assist you on your coding journey, including debugging.)
+These are just a few of the most common errors in R, but there are many
+other types of error messages that can occur. Keep in mind that the best
+way to troubleshoot R errors is to read the error message carefully and
+look for clues about where the error is occurring in your code. And, use
+the internet as a resource! It is very unlikely you are the first person
+to encounter any given error. Artificial intelligence (AI) is also an
+incredibly powerful tool for finding bugs in your code and providing
+solutions to fix them.
