@@ -34,7 +34,7 @@ First, load the necessary packages and read in the bison dataset:
 library(tidyverse)
 
 # Read in the bison dataset
-bison <- read_csv("data/bison_data.csv")
+bison <- read_csv("data_exploration/data/bison_data.csv")
 ```
 
 ## Exercise 1: Basic Data Exploration
