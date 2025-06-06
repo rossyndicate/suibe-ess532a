@@ -1,6 +1,7 @@
 ---
 output:
-  pdf_document
+  word_document: default
+  pdf_document: default
 ---
 # Introduction to R, RStudio and R Markdown
 
