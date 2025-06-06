@@ -110,7 +110,7 @@ plot(x, y)
 
 ## Customizing Code Chunk Output
 
-Note that the `echo = FALSE` parameter was added to the code chunk above
+Sections of code contained within R Markdown documents are called "chunks." Note that the `echo = FALSE` parameter was added to the code chunk above
 to prevent printing of the R code that generated the plot. Code chunks
 are sections of your document that contain executable code, and you can
 use code chunk options to control how that code is executed and
@@ -162,35 +162,14 @@ text.
 
 ------------------------------------------------------------------------
 
-# Section 9: Math
-
-## Inline Math
-
-You can use LaTeX syntax[^1] to format inline math, like this:
-$y = mx + b$
-
-[^1]: LaTeX is a document preparation system used for typesetting and
-    publishing documents, especially those with complex mathematical
-    equations and formulas. It uses a markup language that is similar to
-    HTML, but is specifically designed for producing high-quality
-    documents.
-
-## Display Math
-
-You can also use LaTeX syntax to format display math, like this:
-
-$$
-\int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}
-$$
-
-# Section 10: Tables
+# Section 9: Tables
 
 | Column 1        | Column 2        | Column 3        |
 |-----------------|-----------------|-----------------|
 | Row 1, Column 1 | Row 1, Column 2 | Row 1, Column 3 |
 | Row 2, Column 1 | Row 2, Column 2 | Row 2, Column 3 |
 
-# Section 11: Rmarkdown Themes
+# Section 10: Rmarkdown Themes
 
 Add the “theme” option to the YAML header, followed by the name of the
 theme you want to use. For example:
@@ -206,7 +185,7 @@ including “default”, “cerulean”, “cosmo”, “flatly”, “journal�
 “paper”, “readable”, “sandstone”, “simplex”, “spacelab”, “united”, and
 “yeti”.
 
-# Section 12: Icons
+# Section 11: Icons
 
 ## Emojis
 
@@ -223,7 +202,7 @@ You can view all available unicode characters by viewing the .Rmd with
 **Visual**, then **Insert** -\> **Special Characters** -\> **Insert
 Unicode…**
 
-# Section 13: Footnotes
+# Section 12: Footnotes
 
 Here is some text with a footnote.[^2]
 
