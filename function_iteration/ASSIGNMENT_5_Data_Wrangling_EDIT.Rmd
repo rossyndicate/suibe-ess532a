@@ -1,0 +1,281 @@
+---
+title: "ASSIGNMENT 5: Data Wrangling with Functions and Joins"
+author: "Your Name"
+date: "2025-06-08"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Instructions
+
+Complete all 5 questions using National Park Service data. This assignment teaches:
+- Writing functions
+- Using purrr::map() for iteration  
+- Joining datasets
+- Data manipulation
+
+Load packages and data first. Each question builds on previous concepts.
+
+```{r}
+# Load packages
+library(tidyverse)
+library(plotly)
+library(scales)
+
+# Read data files
+parkwide_data <- read_csv("data/nps_parkwide_visitation.csv")
+unit_data <- read_csv("data/nps_unit_visitation.csv")
+
+# Filter data for our analysis
+years <- (1980:2024)
+parks <- c("ROMO", "ACAD", "LAKE", "YELL", "GRCA", "ZION", "OLYM", "GRSM")
+
+parkwide <- parkwide_data %>%
+  filter(Year %in% years)
+
+units <- unit_data %>% 
+  filter(Year %in% years & UnitCode %in% parks)
+
+# Combine both datasets
+visitation <- bind_rows(parkwide, units)
+
+# Create summary by year
+annual_visitation <- visitation %>%
+  group_by(UnitCode, Year) %>% 
+  summarize(RecVisitation = sum(RecreationVisitors), .groups = "drop")
+```
+
+---
+
+### Question 1: Calculate Park Percentages (15 points)
+
+**Task**: Find what percentage each park represents of total visitation each year.
+
+Create `park_percentages` with columns: Year, UnitCode, RecVisitation, PercentOfTotal
+
+**Hint**: Use `group_by(Year)` then `mutate()` to calculate percentages within each year.
+
+```{r}
+# Write your code here
+park_percentages <- annual_visitation %>%
+  group_by(Year) %>%
+  mutate(PercentOfTotal = (RecVisitation / sum(RecVisitation)) * 100) %>%
+  ungroup()
+
+# Check your result
+head(park_percentages)
+```
+
+---
+
+### Question 2: Write a Function + Use map() (25 points)
+
+**Part A**: Write function `plot_monthly_visitation()` 
+- Input: park_code (example: "YELL")
+- Output: bar plot showing average monthly visitors
+
+**Part B**: Use `map()` to create plots for multiple parks
+
+```{r}
+# Part A: Write the function
+plot_monthly_visitation <- function(park_code) {
+  # Filter data for this park
+  park_data <- units %>%
+    filter(UnitCode == park_code)
+  
+  # Calculate monthly averages
+  monthly_avg <- park_data %>%
+    group_by(Month) %>%
+    summarize(AvgVisitation = mean(RecreationVisitors, na.rm = TRUE), .groups = "drop")
+  
+  # Create plot
+  ggplot(monthly_avg, aes(x = Month, y = AvgVisitation)) +
+    geom_col(fill = "steelblue") +
+    labs(title = paste("Average Monthly Visitation:", park_code),
+         x = "Month", 
+         y = "Average Visitors") +
+    theme_minimal()
+}
+
+# Test the function
+plot_monthly_visitation("YELL")
+
+# Part B: Use map() to create plots for 3 parks
+park_list <- c("YELL", "GRCA", "ZION")
+
+# Use map() here to create multiple plots
+plots_list <- map(park_list, plot_monthly_visitation)
+
+# Display one plot
+plots_list[[1]]
+```
+
+---
+
+### Question 3: Understanding Joins (20 points)
+
+**Task**: Practice different join types and understand the differences using the test data below:
+
+```{r}
+# Create two simple datasets for practice
+# Dataset A: Park information
+parks_info <- data.frame(
+  ParkCode = c("YELL", "GRCA", "ZION"),
+  ParkName = c("Yellowstone", "Grand Canyon", "Zion"),
+  State = c("Wyoming", "Arizona", "Utah")
+)
+
+# Dataset B: Visitor numbers (missing ZION, has extra park ROMO)
+visitor_2023 <- data.frame(
+  ParkCode = c("YELL", "GRCA", "ROMO"),
+  Visitors = c(1000000, 800000, 600000),
+  Year = c(2023, 2023, 2023)
+)
+
+# Look at both datasets first
+print("Dataset A - Parks Info:")
+print(parks_info)
+print("Dataset B - Visitor Numbers:")
+print(visitor_2023)
+
+# Now try different joins
+print("=== INNER JOIN ===")
+inner_result <- inner_join(parks_info, visitor_2023, by = "ParkCode")
+print(inner_result)
+print(paste("Rows:", nrow(inner_result)))
+
+print("=== LEFT JOIN ===") 
+left_result <- left_join(parks_info, visitor_2023, by = "ParkCode")
+print(left_result)
+print(paste("Rows:", nrow(left_result)))
+
+print("=== RIGHT JOIN ===")
+right_result <- right_join(parks_info, visitor_2023, by = "ParkCode")
+print(right_result)
+print(paste("Rows:", nrow(right_result)))
+```
+
+
+```{r}
+# Create test datasets
+niob_data <- unit_data %>% 
+  filter(UnitCode == "NIOB", Year %in% 2020:2024)
+
+parkwide_subset <- parkwide_data %>% 
+  filter(Year %in% 2022:2024)
+
+# Perform different joins
+inner_result <- inner_join(niob_data, parkwide_subset, by = c("Year", "Month"))
+left_result <- left_join(niob_data, parkwide_subset, by = c("Year", "Month"))
+right_result <- right_join(niob_data, parkwide_subset, by = c("Year", "Month"))
+anti_result <- anti_join(niob_data, parkwide_subset, by = c("Year", "Month"))
+
+# Check number of rows
+cat("Original niob_data rows:", nrow(niob_data), "\n")
+cat("Original parkwide_subset rows:", nrow(parkwide_subset), "\n")
+cat("inner_join rows:", nrow(inner_result), "\n")
+cat("left_join rows:", nrow(left_result), "\n") 
+cat("right_join rows:", nrow(right_result), "\n")
+cat("anti_join rows:", nrow(anti_result), "\n")
+```
+
+**Questions**: 
+1) What is the difference between `inner_join()` and `anti_join()`?
+
+2) What is the difference between `left_join()` and `right_join()`?
+
+
+**Answers:**
+
+- `inner_join()` Only keeps rows that exist in BOTH datasets, while `anti_join()` only keeps rows from the left dataset that do NOT match the right dataset.
+- `left_join()` Keeps ALL rows from left dataset, adds matching rows from right, while `right_join()` keeps all rows from the RIGHT dataset and adds matching rows in the left.
+
+---
+
+### Question 4: Find Peak Month + Join Data (20 points)
+
+**Task**: Find each park's busiest month in 2023, then join with total yearly visitors.
+
+**Steps**:
+1. Find peak month for each park in 2023
+2. Calculate total visitation for each park in 2023  
+3. Join the results together
+
+```{r}
+# Step 1: Find peak month for each park in 2023
+peak_months <- units %>%
+  filter(Year == 2023) %>%
+  group_by(UnitCode) %>%
+  slice_max(RecreationVisitors, n = 1) %>%
+  select(UnitCode, PeakMonth = Month, PeakMonthVisitation = RecreationVisitors)
+
+# Step 2: Calculate total 2023 visitation
+total_2023 <- units %>%
+  filter(Year == 2023) %>%
+  group_by(UnitCode) %>%
+  summarize(TotalAnnualVisitation = sum(RecreationVisitors), .groups = "drop")
+
+# Step 3: Join the data
+peak_analysis <- left_join(peak_months, total_2023, by = "UnitCode")
+
+# View result
+peak_analysis
+```
+
+---
+
+### Question 5: Multi-Year Comparison with Pivot (20 points)
+
+**Task**: Compare park visitation for 2019, 2020 (pandemic), and 2021.
+
+Create final result showing:
+- 2019, 2020, 2021 total visitation
+- Percent change from 2019→2020  
+- Percent change from 2020→2021
+
+**Hint**: Use `pivot_wider()` to make years into columns, then calculate percent changes.
+
+```{r}
+# Get visitation for 2019, 2020, 2021
+three_year_data <- annual_visitation %>%
+  filter(Year %in% c(2019, 2020, 2021)) %>%
+  select(UnitCode, Year, RecVisitation)
+
+# Pivot to make years as columns
+wide_data <- three_year_data %>%
+  pivot_wider(names_from = Year, 
+              values_from = RecVisitation, 
+              names_prefix = "Year_")
+
+# Calculate percent changes
+# Formula: ((new - old) / old) * 100
+pandemic_comparison <- wide_data %>%
+  mutate(
+    Change_2019_to_2020 = ((Year_2020 - Year_2019) / Year_2019) * 100,
+    Change_2020_to_2021 = ((Year_2021 - Year_2020) / Year_2020) * 100
+  ) %>%
+  # Round to 1 decimal place for easier reading
+  mutate(across(starts_with("Change"), ~ round(.x, 1)))
+
+# View final result
+pandemic_comparison
+```
+
+---
+
+## Summary
+
+This assignment practiced:
+- ✅ Writing functions
+- ✅ Using map() for iteration
+- ✅ Different types of joins
+- ✅ Pivoting data (wide/long format)
+- ✅ Calculating percentages and changes
+
+**Questions to think about**:
+1. Which parks were most affected by the 2020 pandemic?
+2. How do different join types change your results?
+3. When would you use map() instead of a for loop?
