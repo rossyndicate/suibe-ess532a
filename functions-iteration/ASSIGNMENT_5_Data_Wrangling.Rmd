@@ -1,0 +1,148 @@
+---
+title: "ASSIGNMENT"
+author: "Katie Willi"
+date: "2025-06-08"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Instructions
+
+Complete all 5 questions below using the National Park Service visitation datasets. Make sure to load the necessary packages and data at the beginning of your assignment. Each question builds upon concepts covered in our functions, iteration, and data wrangling lessons.
+
+```{r}
+# Load packages
+library(tidyverse)
+library(plotly)
+library(scales)
+
+# Read in the data
+parkwide_data <- read_csv("functions-iteration/data/nps_parkwide_visitation.csv")
+unit_data <- read_csv("functions-iteration/data/nps_unit_visitation.csv")
+
+# Set up the data as shown in class
+years <- (1980:2024)
+parks <- c("ROMO", "ACAD", "LAKE", "YELL", "GRCA", "ZION", "OLYM", "GRSM")
+
+parkwide <- parkwide_data %>%
+  filter(Year %in% years)
+
+units <- unit_data %>% 
+  filter(Year %in% years & UnitCode %in% parks)
+
+# Combine datasets
+visitation <- bind_rows(parkwide, units)
+
+# Create annual visitation data
+annual_visitation <- visitation %>%
+  group_by(UnitCode, Year) %>% 
+  summarize(RecVisitation = sum(RecreationVisitors))
+```
+
+#### Question 1: Calculate Percentage of Total Park Visitation 
+
+Using the annual_visitation data frame created above, calculate what percentage of total parkwide visitation each individual park unit represents for each year. Create a new data frame called park_percentages that includes columns for Year, UnitCode, RecVisitation, and a new column called PercentOfTotalVisitation.
+
+```{r}
+# YOUR CODE HERE #
+```
+
+#### Question 2a: Create a Plotting Function 
+
+Write a function called plot_monthly_visitation() that takes one argument:
+
+`park_code`: a single park unit code 
+
+The function should return a bar plot showing the average monthly recreational visitation for that specific park across all available years. The plot should have proper labels and formatting.
+
+Test your function using "YELL" (Yellowstone) as the park code.
+
+Hint:
+- Input: park_code (example: "YELL")
+- Output: bar plot showing average monthly visitors
+
+```{r}
+# YOUR CODE HERE #
+```
+
+#### Question 2b: 
+
+Use `map()` to create plots for multiple parks using the function you made in Question 2a.
+
+```{r}
+# YOUR CODE HERE #
+```
+
+#### Question 3: Understanding Different Join Types
+
+Create two smaller datasets for this exercise:
+
+niob_data: Filter unit_data for Niobrara National Scenic River (UnitCode = "NIOB") for years 2020-2024
+parkwide_subset: Filter parkwide_data for years 2023-2024
+
+Now perform each of the following joins and examine the results:
+
+```{r}
+# Create the datasets
+niob_data <- unit_data %>% 
+  filter(UnitCode == "NIOB", Year %in% 2020:2024)
+
+parkwide_subset <- parkwide_data %>% 
+  filter(Year %in% 2023:2024)
+
+# Perform each join and examine the number of rows returned
+inner_result <- inner_join(niob_data, parkwide_subset, by = c("Year", "Month"))
+left_result <- left_join(niob_data, parkwide_subset, by = c("Year", "Month"))
+right_result <- right_join(niob_data, parkwide_subset, by = c("Year", "Month"))
+anti_result <- anti_join(niob_data, parkwide_subset, by = c("Year", "Month"))
+
+# Check the number of rows in each result
+nrow(inner_result)
+nrow(left_result)
+nrow(right_result)
+nrow(anti_result)
+
+# View the output of each result
+```
+
+**ANSWER THE QUESTIONS BELOW**: 
+
+1) What is the difference between `inner_join()` and `anti_join()`?
+
+2) What is the difference between `left_join()` and `right_join()`?
+
+#### Question 4: Peak Season Analysis with Joins 
+
+Identify each park's busiest month in 2023, then join this information with the park's total annual visitation for 2023.
+
+**Steps**:
+1. Find peak month for each park in 2023
+2. Calculate total visitation for each park in 2023  
+3. Join the results together
+
+Your final result should show: UnitCode, PeakMonth, PeakMonthVisitation, and TotalAnnualVisitation for 2023.
+
+```{r}
+# YOUR CODE HERE #
+```
+
+#### Question 5: Multi-Year Comparison with Advanced Joining 
+
+Compare how each park's 2020 visitation (pandemic year) compared to their 2019 and 2021 visitation using joins. Create a final dataset that shows for each park:
+
+Create final result showing:
+- 2019, 2020, 2021 total visitation
+- Percent change from 2019→2020  
+- Percent change from 2020→2021
+
+Each park is a row in the data frame, and each variable above is a column. 
+
+**Hint**: Use `pivot_wider()` to make years into columns, then calculate percent changes. Use the formula: ((new_value - old_value) / old_value) * 100 for percent change.
+
+```{r}
+# YOUR CODE HERE #
+```
+
