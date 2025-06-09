@@ -27,10 +27,10 @@ Let's read in our parkwide visitation data from last week as well as our new uni
 
 ```{r}
 # Read in the parkwide visitation data
-parkwide_data <- read_csv("functions-iteration/data/nps_parkwide_visitation.csv")
+parkwide_data <- read_csv("data/nps_parkwide_visitation.csv")
 
 # Read in the unit-specific visitation data  
-unit_data <- read_csv("functions-iteration/data/nps_unit_visitation.csv")
+unit_data <- read_csv("data/nps_unit_visitation.csv")
 ```
 
 Let's pull park-wide visitor data from 1980-2024, and name the final object `parkwide`. (Code hack: we can use `1980:2024` to create a vector of years so we don't have to write each year out!)

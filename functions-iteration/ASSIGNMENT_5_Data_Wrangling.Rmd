@@ -1,5 +1,5 @@
 ---
-title: "ASSIGNMENT"
+title: "ASSIGNMENT 5: Data Wrangling"
 author: "Katie Willi"
 date: "2025-06-08"
 output: html_document
@@ -20,8 +20,8 @@ library(plotly)
 library(scales)
 
 # Read in the data
-parkwide_data <- read_csv("functions-iteration/data/nps_parkwide_visitation.csv")
-unit_data <- read_csv("functions-iteration/data/nps_unit_visitation.csv")
+parkwide_data <- read_csv("data/nps_parkwide_visitation.csv")
+unit_data <- read_csv("data/nps_unit_visitation.csv")
 
 # Set up the data as shown in class
 years <- (1980:2024)
