@@ -1,0 +1,133 @@
+---
+title: "ASSIGNMENT_1_Intro"
+output: word_document
+---
+
+To answer each question, put the code in a code chunk directly below each question. For this assignment you will need to load the `tidyverse` and `palmerpenguins` packages, and use the `penguins` dataset like we did in the lesson.
+
+A reminder, you can load in the `penguins` data with the line of code below:
+```{r}
+data("penguins")
+```
+
+
+#### Exercises
+
+
+1.  Why don't the following lines of code work? Fix each one so the code runs.
+
+```{r eval=FALSE}
+myList["Fruit"]
+```
+
+```{r eval=FALSE}
+penguins$flipper_lenght_mm
+```
+
+```{r eval=FALSE}
+penguins[island=='Dream',]
+```
+
+**ANSWERS**
+```{r}
+myList[["Fruit"]] #double brackets when indexing a list
+
+penguins$flipper_length_mm # "length" was spelled wrong
+
+penguins[penguins$island == 'Dream',] # needed to specify the data frame that "island" was a variable in
+```
+
+
+2.  How many species are in the `penguins` data set? What islands were the data collected for? Note: the `unique()` function might help.
+
+**Answer**
+
+```{r}
+unique(penguins$species) # Adelie, Gentoo, Chinstrap. 3 species total
+
+unique(penguins$island) # Torgersen, Biscoe and Dream island.
+```
+
+
+
+3.  Use indexing to create a new data frame that has only 3 columns: species, island and flipper length columns, and subset all rows for just the 'Dream' island.
+
+**Answer**
+
+```{r}
+#indexing
+penguins[penguins$island == "Dream", c("species", "island", "flipper_length_mm")]
+
+# OR, you could do this with the `select()` and `filter()` functions
+penguins %>% 
+  filter(island == "Dream") %>% 
+  select(species, island, flipper_length_mm)
+```
+
+
+
+4.  Use indexing and the `mean()` function to find the average flipper length for the *Adelie* species on Dream island. Note: explore the `mean()` function and how to deal with NA values.
+
+**Answer**
+
+```{r}
+values <- penguins[penguins$species == "Adelie" & penguins$island == "Dream", "flipper_length_mm"]
+
+# to get the mean:
+mean(values$flipper_length_mm, na.rm = TRUE) # 189.7321
+
+#OR, using dplyr functions:
+penguins %>% 
+  filter(species == "Adelie" & island == "Dream") %>% 
+  summarise(mean = mean(flipper_length_mm, na.rm = TRUE)) # Rounds the value to 190
+```
+
+
+
+5.  Reorder the variables in `penguins` so that `year` is the first column followed by the rest. Hint: look into the use of `everything()`.
+
+**Answer**
+
+```{r}
+penguins %>% 
+  select(year, everything())
+
+```
+
+
+
+6.  Create a new column called 'size_group' where individuals with a body mass greater than 4000 are called 'large' and those smaller are called 'small'.
+
+
+**Answer**
+
+```{r}
+penguins %>% 
+  mutate(size_group = if_else(body_mass_g > 4000, "large", "small"))
+```
+
+
+
+7.  Which species had the largest average body mass? Remember to account for NA values.
+
+
+```{r}
+penguins %>% 
+  group_by(species) %>% 
+  summarise(avg_body_mass = mean(body_mass_g, na.rm = TRUE))
+
+# Gentoo are the largest
+```
+
+
+
+8.  Filter data for years that are *not* 2008 or 2009.
+
+
+```{r}
+penguins %>% 
+  filter(!year %in% c("2008", "2009"))
+```
+
+
+
