@@ -68,16 +68,10 @@ cities_sf <- st_as_sf(chinese_cities,
 
 ---
 
-## Question 1: Load Temperature Raster Data (5 points)
+## Load Temperature Raster Data
 
 Load both temperature raster files using the `rast()` function:
 
-```{r}
-# Load temperature raster data
-china_temp_hist <- # YOUR CODE HERE
-china_temp_2050 <- # YOUR CODE HERE
-
-```
 
 ```{r load-temperature-data}
 # Load temperature raster data
@@ -88,7 +82,7 @@ china_temp_2050 <- rast("data/china_2050_temp.tiff")
 
 ---
 
-## Question 2: Visualize Historic Temperature (10 points)
+## Question 1: Visualize Historic Temperature (5 points)
 
 Create a map showing historic temperature across China. Your map should:
 - Convert the raster to a data frame for plotting
@@ -118,7 +112,7 @@ ggplot() +
 
 ---
 
-## Question 3: Calculate Temperature Change (10 points)
+## Question 2: Calculate Temperature Change (5 points)
 
 Calculate the projected change in temperature between 2050 and historic. Call the new raster object "temp_change" and use `plot()` to view it.
 
@@ -137,7 +131,7 @@ plot(temp_change, main = "Projected Temperature Change (2050 - Historic)")
 
 ---
 
-## Question 4: Extract Temperature Data for Cities (15 points)
+## Question 3: Extract Temperature Data for Cities (5 points)
 
 Extract the projected temperature change values for all major Chinese cities using the `extract()` function and add this information as a new column in the `cities_sf` dataset:
 
@@ -180,7 +174,7 @@ Which cities are projected to experience the greatest temperature increases? Lis
 
 ---
 
-## Question 5: Provincial Temperature Analysis (15 points)
+## Question 4: Provincial Temperature Analysis (5 points)
 
 Calculate the mean projected temperature change for each province using the `zonal()` function. Add the values as a new column to your china_provices data.
 
@@ -224,7 +218,7 @@ Which provinces are projected to warm the most and least?
 
 ---
 
-## Bonus Task: Change Correlations (5 extra credit points)
+## Bonus Task: Change Correlations (2 extra credit points)
 
 Join the *provinces_precip* dataset we created togther in class with the similar *provinces_temp* dataset (or whatever you named it) you created in this assignment and create a scatter plot that shows the relationship between change in precipitation and change in temperature. What trends do you see?
 
