@@ -46,7 +46,7 @@ There are a couple new packages we need to install to work with geospatial data.
 
 -   `tmap` : visualizing spatial data (i.e., making maps!)
 
-- `rnaturalearth` : to retrieve global map data
+-   `rnaturalearth` : to retrieve global map data
 
 ## Install new packages: Only do this ONCE
 
@@ -224,7 +224,7 @@ china_precip_2050 <- rast("data/china_2050_precip.tiff")
 
 ```
 
-These two datasets were retieved from the WorldClim database: https://www.worldclim.org/. 
+These two datasets were retrieved from the WorldClim database: https://www.worldclim.org/. 
 - china_historic_precip.tiff : this represents mean annual precipitation from 1970-2000 (mm)
 - china_2050_precip.tiff : this represents projected mean annual precipitation for 2041-2060.
 
