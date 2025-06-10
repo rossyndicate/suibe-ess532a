@@ -44,7 +44,11 @@ annual_visitation <- visitation %>%
 
 #### Question 1: Calculate Percentage of Total Park Visitation 
 
-Using the annual_visitation data frame created above, calculate what percentage of total parkwide visitation each individual park unit represents for each year. Create a new data frame called park_percentages that includes columns for Year, UnitCode, RecVisitation, and a new column called PercentOfTotalVisitation.
+Task: Calculate a new variable showing each park's *percentage* of RecVisitation compared to the total RecVisitation.
+
+Create a new dataframe called `park_percentages` with columns: Year, UnitCode, RecVisitation, and PercentOfTotal.
+
+Hint: Use `group_by(Year)` then `mutate()` to calculate percentages within each year.
 
 ```{r}
 # YOUR CODE HERE #
@@ -54,15 +58,16 @@ Using the annual_visitation data frame created above, calculate what percentage 
 
 Write a function called plot_monthly_visitation() that takes one argument:
 
-`park_code`: a single park unit code 
+`park_code`: a single park unit code (example: "YELL")
 
-The function should return a bar plot showing the average monthly recreational visitation for that specific park across all available years. The plot should have proper labels and formatting.
+The function should include three steps:
+1) Filter the `units` dataframe to the selected park (using the `park_code` argument)
+2) Using the filtered data, calculate the average monthly RecreationVisitors (using `group_by()` and `summarise()`)
+3) Create a bar plot that shows those calculated monthly averages for the selected park (using `geom_col()` with the month on the x axis and the average visitation on the y axis)
 
-Test your function using "YELL" (Yellowstone) as the park code.
+The function should return a bar plot showing the average monthly recreational visitation for the selected park across all available years. The plot should have proper labels and formatting.
 
-Hint:
-- Input: park_code (example: "YELL")
-- Output: bar plot showing average monthly visitors
+**Then test your function using "YELL" (Yellowstone) for the `park_code = ` argument.**
 
 ```{r}
 # Part A: Write the function
@@ -91,12 +96,10 @@ plot_monthly_visitation("YELL")
 
 #### Question 2b: 
 
-Use `map()` to create plots for multiple parks using the function you made in Question 2a.
+Use `map()` to create plots for multiple parks using the function you made in Question 2a and the list of park names below (`park_list`).
+
 
 ```{r}
-# Test the function
-plot_monthly_visitation("YELL")
-
 # Part B: Use map() to create plots for 3 parks
 park_list <- c("YELL", "GRCA", "ZION")
 
@@ -109,12 +112,14 @@ plots_list[[3]]
 
 #### Question 3: Understanding Different Join Types
 
-Create two smaller datasets for this exercise:
+**Execute the section of code below, inspect the results, and then answer the questions about the different join functions below.**
 
-niob_data: Filter unit_data for Niobrara (UnitCode = "NIOB") for years 2020-2024
+This code creates two smaller datasets:
+
+niob_data: Filter unit_data for Niobrara National Scenic River (UnitCode = "NIOB") for years 2020-2024
 parkwide_subset: Filter parkwide_data for years 2023-2024
 
-Now perform each of the following joins and examine the results:
+And then performs each of the following joins and examines the results:
 
 ```{r}
 # Create the datasets
@@ -143,6 +148,7 @@ nrow(anti_result)
 1) What is the difference between `inner_join()` and `anti_join()`?
 
 2) What is the difference between `left_join()` and `right_join()`?
+
 #### Question 4: Peak Season Analysis with Joins 
 
 Identify each park's busiest month in 2023, then join this information with the park's total annual visitation for 2023.

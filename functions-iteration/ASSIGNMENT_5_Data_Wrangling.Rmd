@@ -44,7 +44,11 @@ annual_visitation <- visitation %>%
 
 #### Question 1: Calculate Percentage of Total Park Visitation 
 
-Using the annual_visitation data frame created above, calculate what percentage of total parkwide visitation each individual park unit represents for each year. Create a new data frame called park_percentages that includes columns for Year, UnitCode, RecVisitation, and a new column called PercentOfTotalVisitation.
+Task: Calculate a new variable showing each park's *percentage* of RecVisitation compared to the total RecVisitation.
+
+Create a new dataframe called `park_percentages` with columns: Year, UnitCode, RecVisitation, and PercentOfTotal.
+
+Hint: Use `group_by(Year)` then `mutate()` to calculate percentages within each year.
 
 ```{r}
 # YOUR CODE HERE #
@@ -54,15 +58,17 @@ Using the annual_visitation data frame created above, calculate what percentage 
 
 Write a function called plot_monthly_visitation() that takes one argument:
 
-`park_code`: a single park unit code 
+`park_code`: a single park unit code (example: "YELL")
 
-The function should return a bar plot showing the average monthly recreational visitation for that specific park across all available years. The plot should have proper labels and formatting.
+The function should include three steps:
+1) Filter the `units` dataframe to the selected park (using the `park_code` argument)
+2) Using the filtered data, calculate the average monthly RecreationVisitors (using `group_by()` and `summarise()`)
+3) Create a bar plot that shows those calculated monthly averages for the selected park (using `geom_col()` with the month on the x axis and the average visitation on the y axis)
 
-Test your function using "YELL" (Yellowstone) as the park code.
+The function should return a bar plot showing the average monthly recreational visitation for the selected park across all available years. The plot should have proper labels and formatting.
 
-Hint:
-- Input: park_code (example: "YELL")
-- Output: bar plot showing average monthly visitors
+**Then test your function using "YELL" (Yellowstone) for the `park_code = ` argument.**
+
 
 ```{r}
 # YOUR CODE HERE #
@@ -70,7 +76,12 @@ Hint:
 
 #### Question 2b: 
 
-Use `map()` to create plots for multiple parks using the function you made in Question 2a.
+Use `map()` to create plots for multiple parks using the function you made in Question 2a and the list of park names below (`park_list`).
+
+```{r}
+park_list <- c("YELL", "GRCA", "ZION")
+```
+
 
 ```{r}
 # YOUR CODE HERE #
@@ -78,12 +89,14 @@ Use `map()` to create plots for multiple parks using the function you made in Qu
 
 #### Question 3: Understanding Different Join Types
 
-Create two smaller datasets for this exercise:
+**Execute the section of code below, inspect the results, and then answer the questions about the different join functions below.**
+
+This code creates two smaller datasets:
 
 niob_data: Filter unit_data for Niobrara National Scenic River (UnitCode = "NIOB") for years 2020-2024
 parkwide_subset: Filter parkwide_data for years 2023-2024
 
-Now perform each of the following joins and examine the results:
+And then performs each of the following joins and examines the results:
 
 ```{r}
 # Create the datasets
@@ -114,20 +127,36 @@ nrow(anti_result)
 
 2) What is the difference between `left_join()` and `right_join()`?
 
+
 #### Question 4: Peak Season Analysis with Joins 
 
 Identify each park's busiest month in 2023, then join this information with the park's total annual visitation for 2023.
 
 **Steps**:
-1. Find peak month for each park in 2023
-2. Calculate total visitation for each park in 2023  
-3. Join the results together
 
-Your final result should show: UnitCode, PeakMonth, PeakMonthVisitation, and TotalAnnualVisitation for 2023.
+1. Find the month that has the maximum visitors for each park in 2023 (*we did this part for you*):
+```{r}
+# Step 1: Find peak month for each park in 2023
+peak_months <- units %>%
+  filter(Year == 2023) %>%
+  group_by(UnitCode) %>%
+  slice_max(RecreationVisitors, n = 1) %>%
+  select(UnitCode, MaxMonth = Month, MaxMonthVisitation = RecreationVisitors)
+```
+
+2. Using `peak_months` created above, calculate total visitation for each park in 2023 (using `filter()`, `group_by()` and then `summarise()`)
+```{r}
+#YOUR CODE HERE
+```
+
+3. Join the dataframes created in Step 1 and Step 2 together using the "UnitCode" variable for the `by = ` argument.
+
+*Your final result should show: UnitCode, MaxMonth, MaxMonthVisitation, and TotalAnnualVisitation for 2023.*
 
 ```{r}
 # YOUR CODE HERE #
 ```
+
 
 #### Question 5: Multi-Year Comparison with Advanced Joining 
 
@@ -140,9 +169,25 @@ Create final result showing:
 
 Each park is a row in the data frame, and each variable above is a column. 
 
-**Hint**: Use `pivot_wider()` to make years into columns, then calculate percent changes. Use the formula: ((new_value - old_value) / old_value) * 100 for percent change.
+**STEPS**
+
+1. Get annual visitation for 2019, 2020 and 2021
+```{r}
+three_year_data <- annual_visitation %>%
+  filter(Year %in% c(2019, 2020, 2021)) %>%
+  select(UnitCode, Year, RecVisitation)
+```
+
+2. Use `pivot_wider()` to make each Year its own column
+```{r}
+# YOUR CODE HERE
+```
+
+3. Using the "wide" data created above, calculate two new columns that represent the change in visitation from Year 2019 to 2020 and from Year 2020 to 2021.
+
+**Hint**: Use the formula: ((new_value - old_value) / old_value) * 100 for percent change.
 
 ```{r}
-# YOUR CODE HERE #
+# YOUR CODE HERE 
 ```
 
