@@ -2,8 +2,8 @@
 title: "Joins and Pivots in R"
 date: "2025-06-09"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
