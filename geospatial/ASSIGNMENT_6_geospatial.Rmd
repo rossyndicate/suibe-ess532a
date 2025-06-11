@@ -68,21 +68,21 @@ cities_sf <- st_as_sf(chinese_cities,
 
 ---
 
-## Question 1: Load Temperature Raster Data 
+##Load Temperature Raster Data 
 
-Load both temperature raster files using the `rast()` function:
+Load both temperature raster files using the `rast()` function that will be needed to complete this assignment. Adjust file paths if needed!
 
 ```{r}
 # Load temperature raster data
-china_temp_hist <- # YOUR CODE HERE
-china_temp_2050 <- # YOUR CODE HERE
+china_temp_hist <- rast("data/china_historic_temp.tiff")
+china_temp_2050 <- rast("data/china_2050_temp.tiff")
+
 
 ```
 
-
 ---
 
-## Question 2: Visualize Historic Temperature
+## Question 1: Visualize Historic Temperature (5 points)
 
 Create a map showing historic temperature across China. Your map should:
 - Convert the raster to a data frame for plotting
@@ -98,7 +98,7 @@ Create a map showing historic temperature across China. Your map should:
 
 ---
 
-## Question 3: Calculate Temperature Change 
+## Question 2: Calculate Temperature Change (5 points)
 
 Calculate the projected change in temperature between 2050 and historic. Call the new raster object "temp_change" and use `plot()` to view it.
 
@@ -108,7 +108,7 @@ Calculate the projected change in temperature between 2050 and historic. Call th
 
 ---
 
-## Question 4: Extract Temperature Data for Cities 
+## Question 3: Extract Temperature Data for Cities (5 points)
 
 Extract the projected temperature change values for all major Chinese cities using the `extract()` function and add this information as a new column in the `cities_sf` dataset:
 
@@ -131,7 +131,7 @@ Which cities are projected to experience the greatest temperature increases? Lis
 
 ---
 
-## Question 5: Provincial Temperature Analysis
+## Question 4: Provincial Temperature Analysis (5 points)
 
 Calculate the mean projected temperature change for each province using the `zonal()` function. Add the values as a new column to your china_provices data.
 
@@ -156,7 +156,7 @@ Which provinces are projected to warm the most and least?
 
 ---
 
-## Bonus Task: Change Correlations
+## Bonus Task: Change Correlations (2 extra credit points)
 
 Join the *provinces_precip* dataset we created togther in class with the similar *provinces_temp* dataset (or whatever you named it) you created in this assignment and create a scatter plot that shows the relationship between change in precipitation and change in temperature. What trends do you see?
 
@@ -164,9 +164,8 @@ Notes:
 - To use any of the dplyr join functions (such as `left_join()`) you will first need to convert *provinces_precip* and your new *provinces_temp* object from an sf object to a data frame. You can do this with the `st_drop_geometry()` function.
 
 ```{r bonus-task}
-# Your bonus code here (if attempting)
+# Your bonus code here (if attempting) 
 
 ```
-
 
 
